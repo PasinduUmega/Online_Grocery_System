@@ -375,3 +375,33 @@ section{
 .hidden {
     display: none;
 }
+  
+  .logout {
+    background-color: #ff5252;
+    color: black;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .logout:hover {
+    background-color: #e84141;
+  }
+
+  .profile-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid #ccc;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+    margin-right: 10px;
+  }
+  
+  .profile-icon:hover {
+    border-color: #007bff;
+    transform: scale(1.05);
+  }

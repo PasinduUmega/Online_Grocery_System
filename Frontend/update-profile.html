@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Profile</title>
+    <link rel="stylesheet" href="css/profile.css" />
+  </head>
+  <body>
+    <div class="profile-container">
+      <h1>Update Profile</h1>
+
+      <form id="updateForm">
+        <div class="input-box">
+          <label>Name</label>
+          <input type="text" id="name" placeholder="Enter new name" />
+        </div>
+        <div class="input-box">
+          <label>Email</label>
+          <input type="email" id="email" placeholder="Enter new email" />
+        </div>
+        <div class="input-box">
+          <label>Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter new password"
+          />
+        </div>
+        <button type="submit" class="btn">Save Changes</button>
+      </form>
+
+      <button id="backBtn" class="btn secondary">← Back</button>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const form = document.getElementById("updateForm");
+
+        if (!user) {
+          alert("Please log in first.");
+          window.location.href = "login.html";
+          return;
+        }
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const updatedUser = {
+            name: document.getElementById("name").value || null,
+            email: document.getElementById("email").value || null,
+            password: document.getElementById("password").value || null,
+          };
+
+          try {
+            const res = await fetch(
+              `http://localhost:8080/api/users/${user.id}`,
+              {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedUser),
+              }
+            );
+
+            if (res.ok) {
+              const updated = await res.text(); // get raw text first
+              if (updated) {
+                const userData = JSON.parse(updated); // convert to JSON manually
+                localStorage.setItem("loggedInUser", JSON.stringify(userData));
+              }
+              alert("Profile updated successfully!");
+              window.location.href = "user_profile.html";
+            } else {
+              alert("Update failed.");
+            }
+          } catch (err) {
+            alert("Something went wrong.");
+            console.error(err);
+          }
+        });
+
+        document.getElementById("backBtn").addEventListener("click", () => {
+          window.location.href = "user_profile.html";
+        });
+      });
+    </script>
+  </body>
+</html>
