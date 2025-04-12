@@ -52,8 +52,15 @@
       <li><a href="#about">About us</a></li>
 
     </ul>
-    <button><a href="login.html">Log in</a></button>
-    <button class="Sign-up"><a href="signup.html">Sign up</a></button>
+    <div class="auth-buttons" id="authButtons">
+      <button><a href="login.html">Log in</a></button>
+      <button class="Sign-up"><a href="signup.html">Sign up</a></button>
+    </div>
+
+    <div class="user-info hidden" id="userInfo">
+      <!-- <img src="assets/user-icon.png" alt="Profile" class="profile-icon" /> -->
+      <button id="logoutBtn" class="btn logout">Sign Out</button>
+    </div>
   </div>
   <section class="Home" id="home">
     <div class="home-page">
@@ -384,6 +391,30 @@
       transition: 0.2s;
     }
   </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const authButtons = document.getElementById("authButtons");
+      const userInfo = document.getElementById("userInfo");
+  
+      if (user) {
+        // Logged in → hide login/signup, show profile
+        authButtons.classList.add("hidden");
+        userInfo.classList.remove("hidden");
+      } else {
+        // Not logged in → show login/signup
+        authButtons.classList.remove("hidden");
+        userInfo.classList.add("hidden");
+      }
+  
+      // Handle logout
+      const logoutBtn = document.getElementById("logoutBtn");
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("user");
+        location.reload(); // reload page to reset UI
+      });
+    });
+  </script>
 
 </body>
 
