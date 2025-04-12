@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sing up</title>
+    <link rel="stylesheet" href="css/signup.css" />
+  </head>
+
+  <body>
+    <div class="Singin-box">
+      <div class="singin">
+        <h1>Sign Up</h1>
+      </div>
+      <div class="input-box">
+        <input type="text" class="input" placeholder="Username " />
+      </div>
+      <div class="input-box">
+        <input type="text" class="input" placeholder="E-mail" />
+      </div>
+      <div class="input-box">
+        <input type="text" class="input" placeholder="Password" />
+      </div>
+      <div class="input-box">
+        <input type="password" class="input" placeholder="Comfrom password" />
+      </div>
+      <button class="creat-acc">Creat Account</button>
+    </div>
+
+
+    <script type="module">
+      import { registerUser } from "./js/auth.js";
+    
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("signupForm");
+    
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const name = document.getElementById("username").value;
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const confirmPassword = document.getElementById("confirmPassword").value;
+    
+          const success = await registerUser(name, email, password, confirmPassword);
+          if (success) form.reset();
+        });
+      });
+    </script>
+    
+  </body>
+</html>
