@@ -15,6 +15,16 @@ public class UserService {
         return UserFileUtils.readUsersFromFile(FILE_PATH);
     }
 
+    public User authenticate(String email, String password) {
+        List<User> users = getAllUsers();
+        for (User user : users) {
+            if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     public void addUser(User user) {
         List<User> users = getAllUsers();
 
