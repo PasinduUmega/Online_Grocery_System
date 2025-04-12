@@ -64,11 +64,25 @@
             );
 
             if (res.ok) {
-              const updated = await res.text(); // get raw text first
-              if (updated) {
-                const userData = JSON.parse(updated); // convert to JSON manually
-                localStorage.setItem("loggedInUser", JSON.stringify(userData));
+              const updatedText = await res.text();
+              if (updatedText) {
+                const updatedFields = JSON.parse(updatedText); // only contains updated fields
+                const storedUser = JSON.parse(localStorage.getItem("user"));
+
+                // ✅ Merge: only update fields that exist and are not null or undefined
+                for (const key in updatedFields) {
+                  if (
+                    updatedFields.hasOwnProperty(key) &&
+                    updatedFields[key] !== null &&
+                    updatedFields[key] !== undefined
+                  ) {
+                    storedUser[key] = updatedFields[key];
+                  }
+                }
+
+                localStorage.setItem("user", JSON.stringify(storedUser));
               }
+
               alert("Profile updated successfully!");
               window.location.href = "user_profile.html";
             } else {
