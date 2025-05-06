@@ -1,0 +1,77 @@
+/* style.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+  }
+  
+  body {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+  }
+  
+  .sidebar {
+    width: 220px;
+    background-color: #1e1e2f;
+    color: white;
+    padding: 20px;
+    flex-shrink: 0;
+  }
+  
+  .sidebar h2 {
+    margin-bottom: 30px;
+    font-size: 22px;
+    text-align: center;
+  }
+  
+  .sidebar a {
+    display: block;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    transition: background 0.3s;
+  }
+  
+  .sidebar a:hover,
+  .sidebar a.active {
+    background-color: #333355;
+  }
+  
+  .main {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .header {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    body {
+      flex-direction: column;
+    }
+  
+    .sidebar {
+      width: 100%;
+      text-align: center;
+    }
+  
+    .sidebar a {
+      display: inline-block;
+      margin: 5px;
+    }
+  }
+  
