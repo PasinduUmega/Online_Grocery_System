@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Management</title>
+  <link rel="stylesheet" href="../css/adminstyle.css"/>
+  <style>
+    .btn {
+      padding: 8px 16px;
+      background-color: #1e1e2f;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    .btn.small {
+      padding: 5px 10px;
+      font-size: 14px;
+      margin-right: 5px;
+    }
+
+    .btn.edit {
+      background-color: #2e8b57;
+    }
+
+    .btn.delete {
+      background-color: #c0392b;
+    }
+
+    .add-form {
+      display: none;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #eee;
+    }
+
+    img {
+      max-width: 60px;
+      max-height: 60px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Admin</h2>
+    <a href="adminDashboard.html">Dashboard</a>
+    <a href="userManagement.html">User Management</a>
+    <a href="productManagement.html" class="active">Product Management</a>
+  </div>
+
+  <div class="main">
+    <div class="header">Product Management</div>
+
+    <button class="btn" id="show-form-btn">Add Product</button>
+
+    <div class="add-form card" id="add-form">
+      <form id="product-form">
+        <div class="form-group">
+          <label for="product-name">Product Name:</label>
+          <input type="text" id="product-name" required />
+        </div>
+        <div class="form-group">
+          <label for="category">Category:</label>
+          <input type="text" id="category" required />
+        </div>
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input type="number" id="price" step="0.01" required />
+        </div>
+        <div class="form-group">
+          <label for="quantity">Quantity:</label>
+          <input type="number" id="quantity" required />
+        </div>
+        <div class="form-group">
+          <label for="image">Image URL:</label>
+          <input type="url" id="image" required />
+        </div>
+        <button type="submit" class="btn">Save</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <table id="product-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price ($)</th>
+            <th>Quantity</th>
+            <th>Image</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dynamic rows go here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script type="module" src="products.js"></script>
+</body>
+</html>
