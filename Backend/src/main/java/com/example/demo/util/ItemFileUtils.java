@@ -14,14 +14,15 @@ public class ItemFileUtils {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 5) {
+                if (parts.length == 6) {
+                    String imagePath = parts.length == 6 ? parts[5] : null;
                     Item item = new Item(
                             parts[0],
                             parts[1],
                             parts[2],
                             Double.parseDouble(parts[3]),
                             Integer.parseInt(parts[4]),
-                            parts.length == 5 ? parts[5] : null
+                            imagePath
                     );
                     items.add(item);
                 }

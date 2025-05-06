@@ -3,7 +3,7 @@ import {
     addProduct,
     updateProduct,
     deleteProduct
-  } from './productService.js';
+  } from '../js/productService.js';
   
   const productForm = document.getElementById("product-form");
   const productTable = document.getElementById("product-table").querySelector("tbody");
@@ -19,7 +19,7 @@ import {
       <td>${product.category}</td>
       <td>${product.price}</td>
       <td>${product.quantity}</td>
-      <td><img src="${product.imageUrl}" alt="Image"/></td>
+      <td><img src="${product.imagePath}" alt="Image"/></td>
       <td>
         <button class="btn small edit">Edit</button>
         <button class="btn small delete">Delete</button>
@@ -41,7 +41,7 @@ import {
       category: document.getElementById('category').value,
       price: parseFloat(document.getElementById('price').value),
       quantity: parseInt(document.getElementById('quantity').value),
-      imageUrl: document.getElementById('image').value
+      imagePath: document.getElementById('image').value
     };
   
     if (editingId !== null) {

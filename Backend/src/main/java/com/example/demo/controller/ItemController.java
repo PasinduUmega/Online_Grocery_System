@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Item;
 import com.example.demo.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +22,9 @@ public class ItemController {
     }
 
     @PostMapping
-    public void addItem(@RequestBody Item item) {
+    public ResponseEntity<String> addItem(@RequestBody Item item) {
         itemService.addItem(item);
+        return ResponseEntity.ok("Item added successfully");
     }
 
     @PutMapping("/{id}")

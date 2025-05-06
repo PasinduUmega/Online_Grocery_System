@@ -1,0 +1,2 @@
+I08f1a35b,Breads,Bakery,3000.0,2,https://th.bing.com/th/id/OIP.07DSmcZjpiikJjp8tw_EugHaE6?rs=1&pid=ImgDetMain
+I232e0156,Grapes,Fruits,100.0,100,https://th.bing.com/th/id/OIP.m6yDIJ99cmgHygmx1HpceQHaE8?rs=1&pid=ImgDetMain

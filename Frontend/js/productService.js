@@ -1,5 +1,5 @@
 // productService.js
-const API_URL = "http://localhost:8080/api/products";
+const API_URL = "http://localhost:8080/api/items";
 
 export async function getProducts() {
   const response = await fetch(API_URL);
@@ -12,7 +12,7 @@ export async function addProduct(product) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(product)
   });
-  return response.json();
+  console.log(response)
 }
 
 export async function updateProduct(id, product) {
