@@ -1,5 +1,4 @@
 Ua13073d2,Pasindu,pasindu@gmail.com,user1234
 U2e332edc,gehan,gehan@gmail.com,user123
-U433599ff,john new,john@gmail.com,user123
 Uab437e46,marly,marly@gmail.com,user123
 U54938f6b,gog test,gog@gmail.com,user123
