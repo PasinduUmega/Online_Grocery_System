@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .product {
+            background: #fff;
+            padding: 15px;
+            margin: 10px auto;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .product button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #cartItems {
+            margin-top: 30px;
+        }
+
+        .controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .controls button {
+            margin: 0 5px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .controls button.red {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Shopping Cart</h1>
+
+<div class="product">
+    <h3>Laptop</h3>
+    <img src="images/laptop.png" alt="Laptop">
+    <p>Price: $999.99</p>
+    <button onclick="addItem()">Add to Cart</button>
+</div>
+
+<div class="controls">
+    <button onclick="fetchCart()">View Cart</button>
+    <button onclick="removeItem()" class="red">Remove First</button>
+    <button onclick="clearCart()" class="red">Clear Cart</button>
+    <button onclick="checkoutCart()">Checkout</button>
+</div>
+
+<div id="cartItems"></div>
+
+<script>
+    const API = "http://localhost:8080/api/cart";
+
+    function addItem() {
+        fetch(API, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                name: "Laptop",
+                category: "Electronics",
+                quantity: 1,
+                price: 999.99,
+                imagePath: "images/laptop.png"
+            })
+        })
+            .then(() => alert("Item added to cart"));
+    }
+
+    function fetchCart() {
+        fetch(API)
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById("cartItems");
+                container.innerHTML = "<h3>Cart Items</h3>";
+                data.forEach(item => {
+                    container.innerHTML += `
+            <div class="product">
+              <h4>${item.name}</h4>
+              <img src="${item.imagePath}" alt="${item.name}">
+              <p>${item.quantity} x $${item.price}</p>
+              <p><em>${item.category}</em></p>
+            </div>`;
+                });
+            });
+    }
+
+    function removeItem() {
+        fetch(API + "/remove", { method: "DELETE" })
+            .then(() => {
+                alert("First item removed");
+                fetchCart();
+            });
+    }
+
+    function clearCart() {
+        fetch(API + "/clear", { method: "DELETE" })
+            .then(() => {
+                alert("Cart cleared");
+                fetchCart();
+            });
+    }
+
+    function checkoutCart() {
+        fetch(API + "/checkout", { method: "POST" })
+            .then(res => res.json())
+            .then(data => {
+                alert("Checked out " + data.length + " items.");
+                fetchCart();
+            });
+    }
+</script>
+
+</body>
+</html>
