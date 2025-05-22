@@ -1,0 +1,348 @@
+<section class="feedback-section">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f4f6fb;
+    }
+
+    .feedback-section {
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #f0f3f8, #ffffff);
+    }
+
+    .feedback-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .feedback-header {
+      margin-bottom: 40px;
+    }
+
+    .feedback-header h1 {
+      font-size: 3rem;
+      color: #2c3e50;
+      background: linear-gradient(90deg, #3498db, #8e44ad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-move 5s infinite alternate;
+    }
+
+    .feedback-header p {
+      color: #7f8c8d;
+      font-size: 1.2rem;
+    }
+
+    @keyframes gradient-move {
+      from {
+        background-position: 0%;
+      }
+      to {
+        background-position: 100%;
+      }
+    }
+
+    .feedback-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .feedback-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 25px;
+      width: 320px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+      transition: transform 0.3s ease;
+      text-align: left;
+      position: relative;
+    }
+
+    .feedback-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .customer-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .customer-avatar {
+      background-color: #3498db;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+    }
+
+    .customer-name {
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .feedback-date {
+      font-size: 0.85rem;
+      color: #95a5a6;
+    }
+
+    .rating {
+      color: #f1c40f;
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+
+    .feedback-text {
+      color: #34495e;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .positive {
+      border-left: 4px solid #2ecc71;
+    }
+
+    .neutral {
+      border-left: 4px solid #f39c12;
+    }
+
+    .negative {
+      border-left: 4px solid #e74c3c;
+    }
+
+    /* Rating and form area */
+    .feedback-interaction {
+      margin-top: 60px;
+      text-align: center;
+    }
+
+    .star-rating {
+      font-size: 2.5rem;
+      unicode-bidi: bidi-override;
+      direction: rtl;
+      display: inline-flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .star-rating input {
+      display: none;
+    }
+
+    .star-rating label {
+      color: #ddd;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .star-rating input:checked ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+      color: #f39c12;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .form-group select,
+    .form-group textarea,
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .submit-btn {
+      background: linear-gradient(90deg, #3498db, #8e44ad);
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      opacity: 0.9;
+    }
+
+    .quick-feedback {
+      margin-top: 30px;
+    }
+
+    .quick-feedback button {
+      margin: 5px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .quick-feedback .positive {
+      background-color: #e8f8f5;
+      color: #27ae60;
+    }
+
+    .quick-feedback .negative {
+      background-color: #fdecea;
+      color: #e74c3c;
+    }
+
+    @media (max-width: 768px) {
+      .feedback-row {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+
+  <div class="feedback-container">
+    <div class="feedback-header">
+      <h1>What People Say</h1>
+      <p>Real stories from users of our glossary system</p>
+    </div>
+
+    <div class="feedback-row">
+      <div class="feedback-card positive">
+        <div class="customer-info">
+          <div class="customer-avatar">JD</div>
+          <div>
+            <div class="customer-name">John D.</div>
+            <div class="feedback-date">May 15, 2023</div>
+          </div>
+        </div>
+        <div class="rating">★★★★★</div>
+        <div class="feedback-text">
+          "This system helped our team unify all terminology. It’s user-friendly and well-designed!"
+        </div>
+      </div>
+
+      <div class="feedback-card neutral">
+        <div class="customer-info">
+          <div class="customer-avatar">RT</div>
+          <div>
+            <div class="customer-name">Robert T.</div>
+            <div class="feedback-date">April 28, 2023</div>
+          </div>
+        </div>
+        <div class="rating">★★★☆☆</div>
+        <div class="feedback-text">
+          "Some terms took a while to load, but overall the system works well. Could use offline access."
+        </div>
+      </div>
+
+      <div class="feedback-card negative">
+        <div class="customer-info">
+          <div class="customer-avatar">LP</div>
+          <div>
+            <div class="customer-name">Lisa P.</div>
+            <div class="feedback-date">May 5, 2023</div>
+          </div>
+        </div>
+        <div class="rating">★☆☆☆☆</div>
+        <div class="feedback-text">
+          "Had trouble editing glossary entries. Support took a long time to respond."
+        </div>
+      </div>
+    </div>
+
+    <div class="feedback-interaction">
+      <h2>Share Your Experience</h2>
+      <div class="star-rating">
+        <input type="radio" id="star5" name="rating" value="5" /><label for="star5">★</label>
+        <input type="radio" id="star4" name="rating" value="4" /><label for="star4">★</label>
+        <input type="radio" id="star3" name="rating" value="3" /><label for="star3">★</label>
+        <input type="radio" id="star2" name="rating" value="2" /><label for="star2">★</label>
+        <input type="radio" id="star1" name="rating" value="1" /><label for="star1">★</label>
+      </div>
+
+      <form id="feedback-form">
+        <div class="form-group">
+          <label for="feedback-category">Category</label>
+          <select id="feedback-category" required>
+            <option value="UI">User Interface</option>
+            <option value="Performance">Performance</option>
+            <option value="Content">Content Accuracy</option>
+            <option value="Support">Support</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="feedback-message">Your Feedback</label>
+          <textarea id="feedback-message" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="feedback-contact">Contact (Optional)</label>
+          <input type="text" id="feedback-contact" placeholder="Email or phone number" />
+        </div>
+        <button type="submit" class="submit-btn">Submit Feedback</button>
+      </form>
+
+      <div class="quick-feedback">
+        <h3>Quick Feedback</h3>
+        <button class="positive">Easy to Use</button>
+        <button class="positive">Helpful Glossary</button>
+        <button class="negative">Bugs Found</button>
+        <button class="negative">Hard to Navigate</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('feedback-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const formData = {
+        rating: document.querySelector('input[name="rating"]:checked')?.value || 'Not selected',
+        category: document.getElementById('feedback-category').value,
+        message: document.getElementById('feedback-message').value,
+        contact: document.getElementById('feedback-contact').value
+      };
+      console.log('Feedback Submitted:', formData);
+      alert('Thank you! Your feedback has been recorded.');
+      this.reset();
+    });
+
+    document.querySelectorAll('.quick-feedback button').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        alert(`Quick feedback received: ${btn.innerText}`);
+        btn.style.opacity = '0.6';
+        setTimeout(() => (btn.style.opacity = '1'), 500);
+      });
+    });
+  </script>
+</section>
