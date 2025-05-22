@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "John D.",
+    "avatar": "JD",
+    "date": "2025-05-21",
+    "rating": 5,
+    "category": "UI",
+    "text": "Great system, easy to use!",
+    "type": "positive"
+  },
+  {
+    "id": 2,
+    "name": "Lisa P.",
+    "avatar": "LP",
+    "date": "2025-05-20",
+    "rating": 2,
+    "category": "Performance",
+    "text": "App crashed once while shopping.",
+    "type": "negative"
+  }
+]
