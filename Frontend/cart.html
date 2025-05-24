@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .cart-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #fdfdfd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .cart-header {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .cart-item-name {
+            font-weight: bold;
+        }
+        .cart-item-price {
+            color: green;
+        }
+        .remove-btn {
+            background: #ff5252;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .remove-btn:hover {
+            background: #e84141;
+        }
+        .total {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="menu-bar">
+    <h1 class="logo">DK<span>Store</span></h1>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="allProducts.html">Products</a></li>
+    </ul>
+    <div class="user-info" id="userInfo">
+        <img src="images/pfp.png" alt="Profile" class="profile-icon" />
+        <button id="logoutBtn" class="logout">Logout</button>
+    </div>
+</div>
+
+
+<div class="cart-container">
+    <div class="cart-header">🛒 Your Cart</div>
+    <div id="cartList"></div>
+    <div class="total" id="cartTotal">Total: Rs. 0.00</div>
+    <div class="checkout-section" style="text-align: right; margin-top: 20px;">
+        <button id="checkoutBtn" style="
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    ">
+            Proceed to Checkout
+        </button>
+    </div>
+
+</div>
+
+<script type="module">
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+        alert("Please log in to view your cart.");
+        window.location.href = "login.html";
+    }
+
+    async function fetchCart() {
+        const res = await fetch(`http://localhost:8080/api/cart/user/${user.id}`);
+        return res.json();
+    }
+
+    async function fetchItems() {
+        const res = await fetch("http://localhost:8080/api/items");
+        return res.json();
+    }
+
+    async function renderCart() {
+        const cartList = document.getElementById("cartList");
+        const cartData = await fetchCart();
+        const items = await fetchItems();
+
+        cartList.innerHTML = "";
+        let total = 0;
+
+        cartData.forEach(cartItem => {
+            const item = items.find(i => i.id === cartItem.itemId);
+            if (item) {
+                const cost = item.price * cartItem.quantity;
+                total += cost;
+
+                const div = document.createElement("div");
+                div.className = "cart-item";
+                div.innerHTML = `
+            <div>
+              <div class="cart-item-name">${item.name}</div>
+              <div>Qty: ${cartItem.quantity}</div>
+            </div>
+            <div>
+              <div class="cart-item-price">Rs. ${cost.toFixed(2)}</div>
+              <button class="remove-btn" data-id="${cartItem.id}">Remove</button>
+            </div>
+          `;
+                cartList.appendChild(div);
+            }
+        });
+
+        document.getElementById("cartTotal").innerText = `Total: Rs. ${total.toFixed(2)}`;
+
+
+        // Attach delete listeners
+        document.querySelectorAll(".remove-btn").forEach(btn => {
+            btn.addEventListener("click", async () => {
+                const id = btn.getAttribute("data-id");
+                await fetch(`http://localhost:8080/api/cart/${id}`, { method: "DELETE" });
+                alert("Item removed from cart");
+                renderCart();
+            });
+        });
+    }
+
+    renderCart();
+    document.getElementById("checkoutBtn").addEventListener("click", async () => {
+        const confirmCheckout = confirm("Are you sure you want to checkout?");
+        if (!confirmCheckout) return;
+
+        try {
+            const res = await fetch(`http://localhost:8080/api/cart/clear/${user.id}`, {
+                method: "DELETE"
+            });
+
+            if (res.ok) {
+                alert("Checkout successful! Your cart has been cleared.");
+                renderCart(); // refresh the UI
+            } else {
+                alert("Failed to checkout.");
+            }
+        } catch (err) {
+            console.error("Checkout error:", err);
+            alert("An error occurred during checkout.");
+        }
+    });
+
+
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const logoutBtn = document.getElementById("logoutBtn");
+
+        if (!user) {
+            window.location.href = "login.html";
+        }
+
+        logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("user");
+            localStorage.removeItem("cart");
+            location.href = "index.html";
+        });
+    });
+</script>
+
+</body>
+</html>
