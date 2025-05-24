@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - DK Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .orders-container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .filter-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .filter-control {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            min-width: 150px;
+            font-size: 0.9rem;
+        }
+
+        .filter-control:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .orders-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .order-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-left: 5px solid #4CAF50;
+        }
+
+        .order-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .order-id {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .order-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .order-status {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-processing { background: #d1ecf1; color: #0c5460; }
+        .status-ready { background: #d4edda; color: #155724; }
+        .status-out_for_delivery { background: #cce5ff; color: #004085; }
+        .status-completed { background: #d1ecf1; color: #0c5460; }
+        .status-cancelled { background: #f8d7da; color: #721c24; }
+
+        .order-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .detail-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .detail-label {
+            font-size: 0.85rem;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-value {
+            color: #333;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .order-type-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            background: #e8f5e9;
+            color: #4CAF50;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d, #5a6268);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #17a2b8, #138496);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            color: #999;
+            margin-bottom: 25px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .loading i {
+            font-size: 2rem;
+            color: #4CAF50;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .order-progress {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .progress-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .progress-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: #ddd;
+            z-index: 1;
+        }
+
+        .progress-step.completed::after {
+            background: #4CAF50;
+        }
+
+        .progress-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #ddd;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .progress-step.completed .progress-icon {
+            background: #4CAF50;
+        }
+
+        .progress-step.current .progress-icon {
+            background: #ff9800;
+        }
+
+        .progress-label {
+            font-size: 0.7rem;
+            text-align: center;
+            color: #666;
+        }
+
+        .tracking-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .tracking-info strong {
+            color: #1976D2;
+        }
+
+        @media (max-width: 768px) {
+            .filter-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+
+            .filter-control {
+                min-width: auto;
+                width: 100%;
+            }
+
+            .order-details {
+                grid-template-columns: 1fr;
+            }
+
+            .order-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+
+            .progress-bar {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .progress-step::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="menu-bar">
+    <h1 class="logo">DK<span> Stores</span></h1>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="allProducts.html">Products</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="order.html">Place Order</a></li>
+    </ul>
+    <div class="user-info" id="userInfo">
+        <img src="images/pfp.png" alt="Profile" class="profile-icon" />
+        <button id="logoutBtn" class="logout">Logout</button>
+    </div>
+</div>
+
+<div class="orders-container">
+    <div class="page-header">
+        <h1><i class="fas fa-receipt"></i> My Orders</h1>
+        <p>Track and manage all your orders in one place</p>
+    </div>
+
+    <div class="filter-section">
+        <div class="filter-group">
+            <label>Filter by Status</label>
+            <select id="status-filter" class="filter-control" onchange="filterOrders()">
+                <option value="">All Statuses</option>
+                <option value="PENDING">Pending</option>
+                <option value="PROCESSING">Processing</option>
+                <option value="READY">Ready for Pickup</option>
+                <option value="OUT_FOR_DELIVERY">Out for Delivery</option>
+                <option value="COMPLETED">Completed</option>
+                <option value="CANCELLED">Cancelled</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>Filter by Type</label>
+            <select id="type-filter" class="filter-control" onchange="filterOrders()">
+                <option value="">All Types</option>
+                <option value="PICKUP">Pickup</option>
+                <option value="ONLINE">Delivery</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>Sort by</label>
+            <select id="sort-filter" class="filter-control" onchange="filterOrders()">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="amount-high">Highest Amount</option>
+                <option value="amount-low">Lowest Amount</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>Search Order ID</label>
+            <input type="text" id="search-filter" class="filter-control" placeholder="Enter Order ID" onkeyup="filterOrders()">
+        </div>
+    </div>
+
+    <div id="orders-container" class="orders-grid">
+        <div class="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Loading your orders...</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentUser = null;
+    let allOrders = [];
+    let filteredOrders = [];
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+        currentUser = JSON.parse(localStorage.getItem('user'));
+        if (!currentUser) {
+            alert('Please log in to view your orders.');
+            window.location.href = 'login.html';
+            return;
+        }
+
+        loadUserOrders();
+    });
+
+    // Load user orders
+    async function loadUserOrders() {
+        try {
+            const response = await fetch(`http://localhost:8080/api/orders/user/${currentUser.id}`);
+            if (response.ok) {
+                allOrders = await response.json();
+                filteredOrders = [...allOrders];
+                displayOrders(filteredOrders);
+            } else {
+                throw new Error('Failed to load orders');
+            }
+        } catch (error) {
+            console.error('Error loading orders:', error);
+            document.getElementById('orders-container').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Error Loading Orders</h3>
+                        <p>There was an error loading your orders. Please try again later.</p>
+                        <button class="btn" onclick="loadUserOrders()">
+                            <i class="fas fa-redo"></i> Retry
+                        </button>
+                    </div>
+                `;
+        }
+    }
+
+    // Display orders
+    function displayOrders(orders) {
+        const container = document.getElementById('orders-container');
+
+        if (orders.length === 0) {
+            container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>No Orders Found</h3>
+                        <p>You haven't placed any orders yet.</p>
+                        <a href="allProducts.html" class="btn">
+                            <i class="fas fa-shopping-bag"></i> Start Shopping
+                        </a>
+                    </div>
+                `;
+            return;
+        }
+
+        let html = '';
+        orders.forEach(order => {
+            html += createOrderCard(order);
+        });
+
+        container.innerHTML = html;
+    }
+
+    // Create order card HTML
+    function createOrderCard(order) {
+        const orderTypeIcon = order.orderType === 'PICKUP' ? 'fas fa-map-marker-alt' : 'fas fa-truck';
+        const statusClass = `status-${order.status.toLowerCase()}`;
+        const orderDate = new Date(order.orderTime).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        let progressHtml = '';
+        if (order.orderType === 'PICKUP') {
+            progressHtml = createPickupProgress(order.status);
+        } else {
+            progressHtml = createDeliveryProgress(order.status);
+        }
+
+        let trackingInfo = '';
+        if (order.orderType === 'ONLINE' && order.trackingNumber) {
+            trackingInfo = `
+                    <div class="tracking-info">
+                        <strong>Tracking Number:</strong> ${order.trackingNumber}
+                    </div>
+                `;
+        }
+
+        return `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div>
+                            <div class="order-id">
+                                <i class="${orderTypeIcon}"></i> Order #${order.id}
+                            </div>
+                            <div class="order-date">${orderDate}</div>
+                        </div>
+                        <div class="order-status ${statusClass}">${formatStatus(order.status)}</div>
+                    </div>
+
+                    <div class="order-details">
+                        <div class="detail-group">
+                            <div class="detail-label">Order Type</div>
+                            <div class="detail-value">
+                                <span class="order-type-badge">
+                                    <i class="${orderTypeIcon}"></i>
+                                    ${order.orderType === 'PICKUP' ? 'Pickup' : 'Home Delivery'}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="detail-group">
+                            <div class="detail-label">Total Amount</div>
+                            <div class="detail-value">Rs. ${order.totalAmount.toFixed(2)}</div>
+                        </div>
+                        <div class="detail-group">
+                            <div class="detail-label">Estimated ${order.orderType === 'PICKUP' ? 'Pickup' : 'Delivery'} Time</div>
+                            <div class="detail-value">${order.estimatedTime ? new Date(order.estimatedTime).toLocaleString() : 'Not set'}</div>
+                        </div>
+                        ${order.orderType === 'PICKUP' ? `
+                            <div class="detail-group">
+                                <div class="detail-label">Pickup Location</div>
+                                <div class="detail-value">${order.pickupLocation}</div>
+                            </div>
+                        ` : `
+                            <div class="detail-group">
+                                <div class="detail-label">Delivery Address</div>
+                                <div class="detail-value">${order.deliveryAddress}, ${order.city} ${order.postalCode}</div>
+                            </div>
+                            <div class="detail-group">
+                                <div class="detail-label">Payment Method</div>
+                                <div class="detail-value">${order.paymentMethod}</div>
+                            </div>
+                        `}
+                    </div>
+
+                    ${progressHtml}
+                    ${trackingInfo}
+
+                    <div class="order-actions">
+                        ${getOrderActions(order)}
+                    </div>
+                </div>
+            `;
+    }
+
+    // Create pickup progress indicator
+    function createPickupProgress(status) {
+        const steps = [
+            { key: 'PENDING', label: 'Order Placed', icon: 'fas fa-check' },
+            { key: 'PROCESSING', label: 'Preparing', icon: 'fas fa-cog' },
+            { key: 'READY', label: 'Ready', icon: 'fas fa-clock' },
+            { key: 'COMPLETED', label: 'Picked Up', icon: 'fas fa-handshake' }
+        ];
+
+        return createProgressBar(steps, status);
+    }
+
+    // Create delivery progress indicator
+    function createDeliveryProgress(status) {
+        const steps = [
+            { key: 'PENDING', label: 'Order Placed', icon: 'fas fa-check' },
+            { key: 'PROCESSING', label: 'Preparing', icon: 'fas fa-cog' },
+            { key: 'OUT_FOR_DELIVERY', label: 'Out for Delivery', icon: 'fas fa-truck' },
+            { key: 'COMPLETED', label: 'Delivered', icon: 'fas fa-check-circle' }
+        ];
+
+        return createProgressBar(steps, status);
+    }
+
+    // Create progress bar HTML
+    function createProgressBar(steps, currentStatus) {
+        const statusOrder = ['PENDING', 'PROCESSING', 'READY', 'OUT_FOR_DELIVERY', 'COMPLETED'];
+        const currentIndex = statusOrder.indexOf(currentStatus);
+
+        let html = '<div class="order-progress"><div class="progress-bar">';
+
+        steps.forEach((step, index) => {
+            const stepIndex = statusOrder.indexOf(step.key);
+            let stepClass = '';
+
+            if (stepIndex < currentIndex || currentStatus === 'COMPLETED') {
+                stepClass = 'completed';
+            } else if (stepIndex === currentIndex) {
+                stepClass = 'current';
+            }
+
+            html += `
+                    <div class="progress-step ${stepClass}">
+                        <div class="progress-icon">
+                            <i class="${step.icon}"></i>
+                        </div>
+                        <div class="progress-label">${step.label}</div>
+                    </div>
+                `;
+        });
+
+        html += '</div></div>';
+        return html;
+    }
+
+    // Get available actions for order
+    function getOrderActions(order) {
+        let actions = '';
+
+        if (order.status === 'PENDING' || order.status === 'PROCESSING') {
+            actions += `<button class="btn btn-info" onclick="getOrderPosition('${order.id}')">
+                    <i class="fas fa-info-circle"></i> Queue Position
+                </button>`;
+
+            if (order.status === 'PENDING') {
+                actions += `<button class="btn btn-danger" onclick="cancelOrder('${order.id}')">
+                        <i class="fas fa-times"></i> Cancel Order
+                    </button>`;
+            }
+        }
+
+        if (order.orderType === 'ONLINE' && order.trackingNumber) {
+            actions += `<button class="btn btn-secondary" onclick="trackOrder('${order.trackingNumber}')">
+                    <i class="fas fa-map-marker-alt"></i> Track Order
+                </button>`;
+        }
+
+        actions += `<button class="btn btn-secondary" onclick="getWaitTime('${order.id}')">
+                <i class="fas fa-clock"></i> Estimated Time
+            </button>`;
+
+        if (order.status === 'COMPLETED') {
+            actions += `<button class="btn" onclick="reorder('${order.id}')">
+                    <i class="fas fa-redo"></i> Reorder
+                </button>`;
+        }
+
+        return actions;
+    }
+
+    // Filter orders
+    function filterOrders() {
+        const statusFilter = document.getElementById('status-filter').value;
+        const typeFilter = document.getElementById('type-filter').value;
+        const sortFilter = document.getElementById('sort-filter').value;
+        const searchFilter = document.getElementById('search-filter').value.toLowerCase();
+
+        filteredOrders = allOrders.filter(order => {
+            const matchesStatus = !statusFilter || order.status === statusFilter;
+            const matchesType = !typeFilter || order.orderType === typeFilter;
+            const matchesSearch = !searchFilter || order.id.toLowerCase().includes(searchFilter);
+
+            return matchesStatus && matchesType && matchesSearch;
+        });
+
+        // Sort orders
+        filteredOrders.sort((a, b) => {
+            switch(sortFilter) {
+                case 'newest':
+                    return new Date(b.orderTime) - new Date(a.orderTime);
+                case 'oldest':
+                    return new Date(a.orderTime) - new Date(b.orderTime);
+                case 'amount-high':
+                    return b.totalAmount - a.totalAmount;
+                case 'amount-low':
+                    return a.totalAmount - b.totalAmount;
+                default:
+                    return new Date(b.orderTime) - new Date(a.orderTime);
+            }
+        });
+
+        displayOrders(filteredOrders);
+    }
+
+    // Order action functions
+    async function getOrderPosition(orderId) {
+        try {
+            const response = await fetch(`http://localhost:8080/api/orders/${orderId}/position`);
+            if (response.ok) {
+                const result = await response.json();
+                alert(`Your order is at position #${result.position} in the queue.`);
+            } else {
+                const error = await response.text();
+                alert('Error: ' + error);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error getting order position.');
+        }
+    }
+
+    async function getWaitTime(orderId) {
+        try {
+            const response = await fetch(`http://localhost:8080/api/orders/${orderId}/wait-time`);
+            if (response.ok) {
+                const result = await response.json();
+                const waitTime = new Date(result.estimatedWaitTime);
+                alert(`Estimated wait time: ${waitTime.toLocaleString()}`);
+            } else {
+                const error = await response.text();
+                alert('Error: ' + error);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error getting wait time.');
+        }
+    }
+
+    async function cancelOrder(orderId) {
+        if (!confirm('Are you sure you want to cancel this order?')) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/orders/${orderId}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                alert('Order cancelled successfully!');
+                loadUserOrders();
+            } else {
+                const error = await response.text();
+                alert('Error cancelling order: ' + error);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error cancelling order.');
+        }
+    }
+
+    function trackOrder(trackingNumber) {
+        alert(`Tracking Number: ${trackingNumber}\n\nYou can track your order using this tracking number on our delivery partner's website.`);
+    }
+
+    function reorder(orderId) {
+        if (confirm('Would you like to add the items from this order to your cart?')) {
+            alert('Reorder functionality will be implemented soon!');
+            // TODO: Implement reorder functionality
+        }
+    }
+
+    // Utility functions
+    function formatStatus(status) {
+        const statusMap = {
+            'PENDING': 'Pending',
+            'PROCESSING': 'Processing',
+            'READY': 'Ready for Pickup',
+            'OUT_FOR_DELIVERY': 'Out for Delivery',
+            'COMPLETED': 'Completed',
+            'CANCELLED': 'Cancelled'
+        };
+        return statusMap[status] || status;
+    }
+
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        localStorage.removeItem('user');
+        window.location.href = 'index.html';
+    });
+
+    // Auto-refresh orders every 30 seconds
+    setInterval(() => {
+        loadUserOrders();
+    }, 30000);
+</script>
+</body>
+</html>

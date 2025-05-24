@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online grosary shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+
+<body>
+<div class="menu-bar">
+    <h1 class="logo">DK<span> Stores</span></h1>
+    <div class="seach-box">
+        <!--seach bar-->
+
+        <input class="seach-bar" type="Search" placeholder="Search Here .....">
+        <i class='bx bx-search'></i>
+    </div>
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#products">Products
+            <i class="fas fa-caret-down"></i>
+            <li>
+                <a href="cart.html">
+                    <i class="fas fa-shopping-cart"></i> Cart
+                </a>
+            </li>
+
+        </a>
+            <div class="drop-down">
+                <ul>
+                    <li><a href="allProducts.html">All</a></li>
+                    <li><a href="vegetable.html">vegetable</a></li>
+                    <li><a href="fruit.html">Fruite</a></li>
+                    <li><a href="bakery.html">Bakery</a></li>
+                    <li><a href="household.html">House HOld</a></li>
+                    <li><a href="rice.html">Rice</a></li>
+                    <li><a href="tea.html">Tea & Coffee</a></li>
+                    <li><a href="coking.html">Coking Essentails</a></li>
+
+                    <li><a href="meat.html">Meat</a></li>
+                    <li><a href="baby.html">Baby Products</a></li>
+                    <li><a href="beaty.html">Beauty</a></li>
+                    <li><a href="#gifting">Gifting</a></li>
+                    <li><a href="#stationery">Stationary</a></li>
+                    <li><a href="partyitem.html">Party items & Decarations</a></li>
+                    <li><a href="beverges.html">Beverages</a></li>
+                    <li><a href="#famacy">Famacy</a></li>
+                </ul>
+            </div>
+        </li>
+        <li><a href="#dailydetails">Daily Deals</a></li>
+        <li><a href="#about">About us</a></li>
+
+    </ul>
+    <div class="auth-buttons" id="authButtons">
+        <button><a href="login.html">Log in</a></button>
+        <button class="Sign-up"><a href="signup.html">Sign up</a></button>
+    </div>
+
+    <div class="user-info hidden" id="userInfo">
+        <a href="user_profile.html"><img src="images/pfp.png" alt="Profile" class="profile-icon" /></a>
+        <button id="logoutBtn" class="btn logout">Sign Out</button>
+    </div>
+</div>
+<section class="Home" id="home">
+    <div class="home-page">
+        <img class="home-img" src="/images/logo_new.png" alt="">
+        <h1 class="text"></h1>
+        <p></p>
+        <a href="#products" class="Shop-btn">Shop Now</a>
+    </div>
+</section>
+<section class="Products" id="products">
+    <h2>Shop By Products</h2>
+
+    <div class="Slide-show">
+        <section>
+            <div class="consol-slider">
+                <img src="/images/slide_image.jpg" alt="">
+                <img src="/images/slide_image.jpg" alt="">
+                <img src="/images/slide_image.jpg" alt="">
+
+            </div>
+
+
+
+
+        </section>
+    </div>
+    <div class="product-box">
+        <div class="box">
+            <li><a href="vegetable.html"><img src="/images/loging.pagex.jpg" alt=""></a></li>
+            <a href="vegetable.html">Vegetable</a>
+
+        </div>
+        <div class="box">
+            <li><a href="fruit.html"><img src="/images/fruits.jpeg" alt=""></a></li>
+            <a href="fruit.html">Fruit</a>
+        </div>
+        <div class="box">
+            <li><a href="bakery.html"><img src="/images/bakery item.jpeg" alt=""></a></li>
+            <a href="bakery.html">Bakery</a>
+        </div>
+        <div class="box">
+            <li><a href="household.html"><img src="/images/household.jpeg" alt="" class="img"></a></li>
+            <a href="household.html">House Holed</a>
+        </div>
+        <div class="box">
+            <li><a href="rice.html"><img src="/images/rice.jpeg" alt=""></a></li>
+            <a href="rice.html">Rice</a>
+
+
+        </div>
+        <div class="box">
+            <li><a href="tea.html"> <img src="/images/coffee.jpeg" alt=""></a></li>
+            <a href="tea.html">Tea & Coffee</a>
+        </div>
+        <div class="box">
+            <li><a href="coking.html"><img src="/images/cokking.jpeg" alt=""></a></li>
+            <a href="coking.html">Cokingg Essentials</a>
+        </div>
+        <div class="box">
+            <li><a href="meat.html"><img src="/images/meat.jpeg" alt=""></a></li>
+            <a href="meat.html">Meat</a>
+        </div>
+        <div class="box">
+            <li><a href="baby.html"><img src="/images/baby products.jpeg" alt=""></a></li>
+            <a href="baby.html">Baby Products</a>
+        </div>
+
+        <div class="box">
+            <li><a href="beaty.html"> <img src="/images/beauty.jpeg" alt=""></a></li>
+            <a href="beaty.html">Beauty</a>
+        </div>
+        <div class="box">
+            <li><a href="gift.html"><img src="/images/gift.jpeg" alt=""></a></li>
+            <a href="gift.html">Gifting</a>
+        </div>
+        <div class="box">
+            <li><a href="statianary.html"><img src="/images/stationary.jpeg" alt=""></a></li>
+            <a href="statianary.html">Stationary</a>
+        </div>
+        <div class="box">
+            <li><a href="partyitem.html"><img src="/images/party-items.jpeg" alt=""></a></li>
+            <a href="partyitem.html">Partyitems</a>
+        </div>
+        <div class="box">
+            <li><a href="beverges.html"><img src="/images/bevegars.jpeg" alt=""></a></li>
+            <a href="beverges.html">Beverages</a>
+        </div>
+        <div class="box">
+            <li><a href="phamacy.html"><img src="/images/famacy.jpeg" alt=""></a></li>
+            <a href="phamacy.html">Famacy</a>
+        </div>
+    </div>
+</section>
+<section class="Daily" id="dailydetails">
+    <h1>Daily Deals</h1>
+
+    <div class="head">
+        <div class="imgx">
+            <img src="/images/1 discount.png" alt="">
+        </div>
+        <div class="p-box">
+            <div class="box">
+                <h2>Mixfruit Jam</h2>
+                    <img src="/images/md jam.jpeg" alt="">
+                    <div class="contain">
+                        <span>Rs.480.00</span>
+                        <a href="#">Rs.384.00</a>
+                    </div>
+            </div>
+            <div class="box">
+                <h2>Mixfruit Jam</h2>
+                    <img src="/images/md jam.jpeg" alt="">
+                    <div class="contain">
+                        <span>Rs.480.00</span>
+                        <a href="#">Rs.384.00</a>
+                    </div>
+
+            </div>
+            <div class="box">
+                <h2>Mixfruit Jam</h2>
+                    <img src="/images/md jam.jpeg" alt="">
+                    <div class="contain">
+                        <span>Rs.480.00</span>
+                        <a href="#">Rs.384.00</a>
+                    </div>
+
+            </div>
+            <div class="box">
+                <h2>Mixfruit Jam</h2>
+                    <img src="/images/md jam.jpeg" alt="">
+                    <div class="contain">
+                        <span>Rs.480.00</span>
+                        <a href="#">Rs.384.00</a>
+                    </div>
+
+            </div>
+            <div class="box">
+                <h2>Mixfruit Jam</h2>
+                    <img src="/images/md jam.jpeg" alt="">
+                    <div class="contain">
+                        <span>Rs.480.00</span>
+                        <a href="#">Rs.384.00</a>
+                    </div>
+
+            </div>
+            <div class="box">
+                <h2>Mixfruit Jam</h2>
+                    <img src="/images/md jam.jpeg" alt="">
+                    <div class="contain">
+                        <span>Rs.480.00</span>
+                        <a href="#">Rs.384.00</a>
+                    </div>
+            </div>
+            <div class="box">
+                <h2>Mixfruit Jam</h2>
+                    <img src="/images/md jam.jpeg" alt="">
+                    <div class="contain">
+                        <span>Rs.480.00</span>
+                        <a href="#">Rs.384.00</a>
+                    </div>
+            </div>
+            <div class="box">
+                <h2>Mixfruit Jam</h2>
+                    <img src="/images/md jam.jpeg" alt="">
+                    <div class="contain">
+                        <span>Rs.480.00</span>
+                        <a href="#">Rs.384.00</a>
+                    </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+<section class="About" id="about">
+    <div class="about">
+        <h3>About Us</h3>
+        <img src="/images/aboutus.image2.jpg" alt="">
+    </div>
+    <div class="aboutDis">
+        <p>At Quick cart, we are committed to bringing you a diverse selection of high-quality products to meet your
+            everyday needs. Our journey began with a simple mission: to create a seamless online shopping experience where
+            convenience meets reliability. We believe that shopping should be enjoyable and hassle-free, which is why we've
+            dedicated ourselves to offering a wide range of products, exceptional customer service, and fast, dependable
+            delivery. Our user-friendly website is designed to make your shopping experience effortless and enjoyable. Thank
+            you for choosing DK Store as your trusted onlin
+    </div>
+
+
+
+
+</section>
+<script>
+    const navbar = document.querySelector('.menu-bar');
+    var prevState = window.pageYOffset;
+    window.addEventListener('scroll', () => {
+        var currentState = window.pageYOffset;
+        if (prevState > currentState) {
+            navbar.style.top = "0"
+        }
+        else {
+            navbar.style.top = "-80px"
+        }
+        prevState = currentState;
+    })
+</script>
+<section class="last">
+    <!--last paje -->
+    <div class="last-link-bar">
+        <div class="productnames">
+            <h4>shop by products</h4>
+        </div>
+        <div class="navbox">
+            <a href="vegetableX.html">01. Vegetable</a>
+            <a href="fruit.html">02. Fruit</a>
+            <a href="bakery.html">03. Bakery</a>
+            <a href="household.html">04. House Hold</a>
+            <a href="rice.html">05. Rice</a></li>
+            <a href="tea.html">06. Tea & Coffee</a>
+            <a href="coking.html">07. Cooking Essentials</a>
+            <a href="meat.html">08. Meat</a>
+            <a href="baby.html">09. Baby Products</a>
+            <a href="beaty.html">10. Beauty</a>
+            <a href="gift.html">11. Gifting</a>
+            <a href="statianary.html">12. Stationary</a>
+            <a href="partyitem.html">13. Party items & Decorations</a>
+            <a href="beverges.html">14. Beverages</a>
+            <a href="phamacy.html">15. pharmacy</a>
+        </div>
+    </div>
+    <div class="contac">
+        <h5>Contac Us</h5>
+        <div class="social-icon">
+
+            <img src="/images/icons8-facebook-50.png" alt="">
+            <img src="/images/massenjer 01.png" alt="">
+            <img src="/images/youtube.png" alt="">
+            <img src="/images/instagram.png" alt="">
+            <img src="/images/whatsapp.png" alt="">
+            <img src="/images/telegram.png" alt="">
+
+
+        </div>
+
+    </div>
+    <div class="paymentmethod">
+        <h6>Payment Method</h6>
+        <div class="payment-img">
+            <img src="/images/visa.png" alt="">
+
+        </div>
+        <div class="paymentcard">
+            <img src="/images/card.png" alt="">
+        </div>
+    </div>
+</section>
+<style>
+    .last {
+
+        display: flex;
+        background-color: black;
+    }
+
+    .last-link-bar .productnames h4 {
+        padding: 5px 15px;
+        margin-left: 20px;
+        font-size: 30px;
+        color: white;
+        margin-top: 10px;
+
+    }
+
+    .last-link-bar .navbox a {
+        margin-left: 40px;
+        display: block;
+        color: whitesmoke;
+
+    }
+
+    .last-link-bar .navbox a:hover {
+        color: gold;
+    }
+
+    .last .contac h5 {
+        color: aliceblue;
+        font-size: 30px;
+        padding: 5px 15px;
+        margin-top: 10px;
+        margin-left: 150px;
+
+    }
+
+    .last .contac .social-icon {
+        margin-left: 140px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .last .contac img {
+        padding: 10px;
+        width: 60px;
+        height: 60px;
+        color: black;
+    }
+
+    .last .contac img:hover {
+        transform: scale(1.09);
+        transition: 0.2s;
+    }
+
+    .last .paymentmethod h6 {
+        color: white;
+        font-size: 30px;
+        padding: 5px 15px;
+        margin-top: 10px;
+        margin-left: 150px;
+    }
+
+    .last .paymentmethod img {
+        display: flex;
+        width: 120px;
+        height: 120px;
+        margin-left: 150px;
+    }
+
+    .last .paymentmethod img:hover {
+        transform: scale(1.09);
+        transition: 0.2s;
+    }
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const authButtons = document.getElementById("authButtons");
+        const userInfo = document.getElementById("userInfo");
+
+        if (user) {
+            // Logged in → hide login/signup, show profile
+            authButtons.classList.add("hidden");
+            userInfo.classList.remove("hidden");
+        } else {
+            // Not logged in → show login/signup
+            authButtons.classList.remove("hidden");
+            userInfo.classList.add("hidden");
+        }
+
+        // Handle logout
+        const logoutBtn = document.getElementById("logoutBtn");
+        logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("user");
+            location.reload(); // reload page to reset UI
+        });
+    });
+</script>
+
+</body>
+
+</html>

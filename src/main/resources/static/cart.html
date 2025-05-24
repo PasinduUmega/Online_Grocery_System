@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - DK Store</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .checkout-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #fdfdfd;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        .checkout-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .order-summary {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+        }
+
+        .order-summary h3 {
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 2px solid #4caf50;
+            padding-bottom: 10px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .item-quantity {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: #4caf50;
+        }
+
+        .total-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #333;
+        }
+
+        .total-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .grand-total {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .order-options {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+        }
+
+        .order-options h3 {
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 2px solid #4caf50;
+            padding-bottom: 10px;
+        }
+
+        .option-tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #4caf50;
+            background: white;
+            color: #4caf50;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .tab-button:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+
+        .tab-button:last-child {
+            border-radius: 0 8px 8px 0;
+            border-left: 1px solid #4caf50;
+        }
+
+        .tab-button.active {
+            background: #4caf50;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 80px;
+        }
+
+        .delivery-fee {
+            background: #e8f5e9;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        .place-order-btn {
+            width: 100%;
+            padding: 15px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .place-order-btn:hover {
+            background: #388e3c;
+        }
+
+        .place-order-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="menu-bar">
+    <h1 class="logo">DK<span>Store</span></h1>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="allProducts.html">Products</a></li>
+        <li><a href="cart.html">Cart</a></li>
+    </ul>
+    <div class="user-info" id="userInfo">
+        <img src="images/pfp.png" alt="Profile" class="profile-icon" />
+        <button id="logoutBtn" class="logout">Logout</button>
+    </div>
+</div>
+
+<div class="checkout-container">
+    <h1 class="checkout-header">🛒 Checkout</h1>
+
+    <div class="checkout-content">
+        <!-- Order Summary Section -->
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+            <div id="orderItems"></div>
+
+            <div class="total-section">
+                <div class="total-line">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">Rs. 0.00</span>
+                </div>
+                <div class="total-line" id="deliveryFeeRow" style="display: none;">
+                    <span>Delivery Fee:</span>
+                    <span id="deliveryFeeAmount">Rs. 0.00</span>
+                </div>
+                <div class="total-line grand-total">
+                    <span>Total:</span>
+                    <span id="grandTotal">Rs. 0.00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Options Section -->
+        <div class="order-options">
+            <h3>Order Details</h3>
+
+            <div class="option-tabs">
+                <button class="tab-button active" onclick="switchTab('pickup')">🏪 Pickup</button>
+                <button class="tab-button" onclick="switchTab('delivery')">🚚 Delivery</button>
+            </div>
+
+            <!-- Pickup Tab -->
+            <div id="pickup-tab" class="tab-content active">
+                <form id="pickupForm">
+                    <div class="form-group">
+                        <label for="customerName">Full Name *</label>
+                        <input type="text" id="customerName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number *</label>
+                        <input type="tel" id="phoneNumber" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pickupLocation">Pickup Location *</label>
+                        <select id="pickupLocation" required>
+                            <option value="">Select pickup location</option>
+                            <option value="Main Store - Colombo">Main Store - Colombo</option>
+                            <option value="Branch Store - Kandy">Branch Store - Kandy</option>
+                            <option value="Branch Store - Galle">Branch Store - Galle</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="preferredPickupTime">Preferred Pickup Time</label>
+                        <input type="datetime-local" id="preferredPickupTime">
+                    </div>
+
+                    <button type="submit" class="place-order-btn">Place Pickup Order</button>
+                </form>
+            </div>
+
+            <!-- Delivery Tab -->
+            <div id="delivery-tab" class="tab-content">
+                <form id="deliveryForm">
+                    <div class="form-group">
+                        <label for="deliveryAddress">Delivery Address *</label>
+                        <textarea id="deliveryAddress" placeholder="Enter your full address" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city">City *</label>
+                        <input type="text" id="city" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="postalCode">Postal Code *</label>
+                        <input type="text" id="postalCode" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="deliveryInstructions">Delivery Instructions</label>
+                        <textarea id="deliveryInstructions" placeholder="Any special instructions for delivery (optional)"></textarea>
+                    </div>
+
+                    <div class="delivery-fee">
+                        Delivery Fee: Rs. 150.00
+                    </div>
+
+                    <div class="form-group">
+                        <label for="paymentMethod">Payment Method *</label>
+                        <select id="paymentMethod" required>
+                            <option value="">Select payment method</option>
+                            <option value="CREDIT_CARD">Credit Card</option>
+                            <option value="DEBIT_CARD">Debit Card</option>
+                            <option value="CASH_ON_DELIVERY">Cash on Delivery</option>
+                            <option value="PAYPAL">PayPal</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="place-order-btn">Place Delivery Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let cartData = [];
+    let itemsData = [];
+    let currentUser = null;
+    let subtotalAmount = 0;
+    const deliveryFee = 150;
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        // Check if user is logged in
+        currentUser = JSON.parse(localStorage.getItem("user"));
+        if (!currentUser) {
+            alert("Please log in to proceed with checkout.");
+            window.location.href = "login.html";
+            return;
+        }
+
+        // Load cart and items data
+        await loadCartData();
+        await loadItemsData();
+        renderOrderSummary();
+
+        // Setup form handlers
+        document.getElementById("pickupForm").addEventListener("submit", handlePickupOrder);
+        document.getElementById("deliveryForm").addEventListener("submit", handleDeliveryOrder);
+
+        // Set minimum pickup time to current time
+        const now = new Date();
+        now.setMinutes(now.getMinutes() + 30); // Minimum 30 minutes from now
+        document.getElementById("preferredPickupTime").min = now.toISOString().slice(0, 16);
+    });
+
+    async function loadCartData() {
+        try {
+            const response = await fetch(`http://localhost:8080/api/cart/user/${currentUser.id}`);
+            cartData = await response.json();
+        } catch (error) {
+            console.error("Error loading cart:", error);
+            alert("Error loading cart data");
+        }
+    }
+
+    async function loadItemsData() {
+        try {
+            const response = await fetch("http://localhost:8080/api/items");
+            itemsData = await response.json();
+        } catch (error) {
+            console.error("Error loading items:", error);
+            alert("Error loading items data");
+        }
+    }
+
+    function renderOrderSummary() {
+        const orderItemsContainer = document.getElementById("orderItems");
+        orderItemsContainer.innerHTML = "";
+        subtotalAmount = 0;
+
+        if (cartData.length === 0) {
+            orderItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
+            updateTotals();
+            return;
+        }
+
+        cartData.forEach(cartItem => {
+            const item = itemsData.find(i => i.id === cartItem.itemId);
+            if (item) {
+                const itemTotal = item.price * cartItem.quantity;
+                subtotalAmount += itemTotal;
+
+                const itemDiv = document.createElement("div");
+                itemDiv.className = "cart-item";
+                itemDiv.innerHTML = `
+                        <div class="item-details">
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-quantity">Quantity: ${cartItem.quantity}</div>
+                        </div>
+                        <div class="item-price">Rs. ${itemTotal.toFixed(2)}</div>
+                    `;
+                orderItemsContainer.appendChild(itemDiv);
+            }
+        });
+
+        updateTotals();
+    }
+
+    function updateTotals() {
+        document.getElementById("subtotal").textContent = `Rs. ${subtotalAmount.toFixed(2)}`;
+
+        const isDeliveryActive = document.getElementById("delivery-tab").classList.contains("active");
+        const deliveryFeeRow = document.getElementById("deliveryFeeRow");
+        const deliveryFeeAmount = document.getElementById("deliveryFeeAmount");
+
+        if (isDeliveryActive) {
+            deliveryFeeRow.style.display = "flex";
+            deliveryFeeAmount.textContent = `Rs. ${deliveryFee.toFixed(2)}`;
+            document.getElementById("grandTotal").textContent = `Rs. ${(subtotalAmount + deliveryFee).toFixed(2)}`;
+        } else {
+            deliveryFeeRow.style.display = "none";
+            document.getElementById("grandTotal").textContent = `Rs. ${subtotalAmount.toFixed(2)}`;
+        }
+    }
+
+    function switchTab(tabName) {
+        // Remove active class from all tabs and buttons
+        document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
+
+        // Add active class to selected tab and button
+        document.querySelector(`#${tabName}-tab`).classList.add("active");
+        event.target.classList.add("active");
+
+        // Update totals
+        updateTotals();
+    }
+
+    async function handlePickupOrder(event) {
+        event.preventDefault();
+
+        if (cartData.length === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+
+        const formData = new FormData(event.target);
+        const orderData = {
+            userId: currentUser.id,
+            customerName: formData.get("customerName") || document.getElementById("customerName").value,
+            phoneNumber: formData.get("phoneNumber") || document.getElementById("phoneNumber").value,
+            pickupLocation: formData.get("pickupLocation") || document.getElementById("pickupLocation").value,
+            preferredPickupTime: document.getElementById("preferredPickupTime").value || null
+        };
+
+        // Convert datetime-local to the expected format
+        if (orderData.preferredPickupTime) {
+            const date = new Date(orderData.preferredPickupTime);
+            orderData.preferredPickupTime = date.toISOString().replace('T', ' ').substring(0, 19);
+        }
+
+        try {
+            const response = await fetch("http://localhost:8080/api/orders/pickup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(orderData)
+            });
+
+            if (response.ok) {
+                const order = await response.json();
+                alert(`Pickup order placed successfully! Order ID: ${order.id}`);
+                window.location.href = "index.html";
+            } else {
+                const errorMessage = await response.text();
+                alert("Failed to place order: " + errorMessage);
+            }
+        } catch (error) {
+            console.error("Error placing pickup order:", error);
+            alert("Error placing order. Please try again.");
+        }
+    }
+
+    async function handleDeliveryOrder(event) {
+        event.preventDefault();
+
+        if (cartData.length === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+
+        const formData = new FormData(event.target);
+        const orderData = {
+            userId: currentUser.id,
+            deliveryAddress: formData.get("deliveryAddress") || document.getElementById("deliveryAddress").value,
+            city: formData.get("city") || document.getElementById("city").value,
+            postalCode: formData.get("postalCode") || document.getElementById("postalCode").value,
+            deliveryInstructions: formData.get("deliveryInstructions") || document.getElementById("deliveryInstructions").value || "",
+            deliveryFee: deliveryFee,
+            paymentMethod: formData.get("paymentMethod") || document.getElementById("paymentMethod").value
+        };
+
+        try {
+            const response = await fetch("http://localhost:8080/api/orders/online", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(orderData)
+            });
+
+            if (response.ok) {
+                const order = await response.json();
+                alert(`Delivery order placed successfully! Order ID: ${order.id}\nTracking Number: ${order.trackingNumber || 'Will be provided soon'}`);
+                window.location.href = "index.html";
+            } else {
+                const errorMessage = await response.text();
+                alert("Failed to place order: " + errorMessage);
+            }
+        } catch (error) {
+            console.error("Error placing delivery order:", error);
+            alert("Error placing order. Please try again.");
+        }
+    }
+
+    // Logout functionality
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.removeItem("user");
+        window.location.href = "index.html";
+    });
+</script>
+</body>
+</html>
