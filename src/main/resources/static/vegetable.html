@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Vegetables - DK Store</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script type="module">
+        import { addToCart } from "./js/cartService.js";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (!user) {
+                alert("Please log in first");
+                window.location.href = "login.html";
+                return;
+            }
+
+            document.querySelectorAll(".add-button").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const itemId = btn.getAttribute("data-id");
+                    addToCart(user.id, itemId, 1);
+                });
+            });
+        });
+    </script>
+    <style>
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .product-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .product-name {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .product-price {
+            color: green;
+            margin: 5px 0;
+        }
+        .add-button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .add-button:hover {
+            background-color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+
+<div class="menu-bar">
+    <h1 class="logo">DK<span>Store</span></h1>
+    <div class="search-box">
+        <input class="search-bar" type="search" placeholder="Search...">
+        <i class='bx bx-search'></i>
+    </div>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+    </ul>
+</div>
+
+<h2 style="text-align: center; padding: 20px;">Fresh Vegetables</h2>
+
+<div class="product-grid">
+    <div class="product-card">
+        <img src="images/vegetables/coconut.jpeg" alt="Coconut" class="product-image">
+        <div class="product-name">Coconut</div>
+        <div class="product-price">Rs. 130.00</div>
+        <button class="add-button" data-id="I001">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+        <img src="images/onion.jpeg" alt="Onion" class="product-image">
+        <div class="product-name">Onion</div>
+        <div class="product-price">Rs. 80.00</div>
+        <button class="add-button" data-id="I003">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+        <img src="images/potatos.jpeg" alt="Potato" class="product-image">
+        <div class="product-name">Potato</div>
+        <div class="product-price">Rs. 60.00</div>
+        <button class="add-button" data-id="I002">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+        <img src="images/tomato.jpeg" alt="Tomato" class="product-image">
+        <div class="product-name">Tomato</div>
+        <div class="product-price">Rs. 70.00</div>
+        <button class="add-button" data-id="I001">Add to Cart</button>
+    </div>
+</div>
+
+</body>
+</html>

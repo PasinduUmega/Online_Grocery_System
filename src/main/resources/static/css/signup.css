@@ -1,0 +1,65 @@
+* {
+    margin: 0;
+    top: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: white;
+    background-image: url(/images/login_bg.jpg);
+}
+.Singin-box {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 400px;
+    height: 440px;
+    padding: 30px;
+    background-color: rgb(224, 222, 222);
+
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px 10px rgb(181, 181, 186);
+}
+.Singin-box .singin {
+    text-align: center;
+    margin-bottom: 50px;
+}
+.Singin-box h1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-transform: uppercase;
+    margin-left: 110px;
+}
+.Singin-box .input-box .input {
+    box-shadow: 4px 4px 6px gray;
+    width: 100%;
+    font-size: 20px;
+    margin-bottom: 20px;
+    padding: 7px;
+    border-radius: 30px;
+    outline: none;
+    border: none;
+}
+::placeholder {
+    font-weight: 400;
+    color: rgb(172, 163, 163);
+}
+button {
+    margin-bottom: 30px;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 30px;
+    border: none;
+    background-color: black;
+    color: white;
+}
+button:hover {
+    background-color: blue;
+    color: white;
+}
